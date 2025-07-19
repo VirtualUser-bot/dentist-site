@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Стоматологічна клініка 🦷</title>
-  
+
   <!-- Підключаємо Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
-  
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -17,6 +17,9 @@
       margin: 0;
       padding: 20px;
       text-align: center;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
     }
     .header {
       background: #0066cc;
@@ -24,15 +27,14 @@
       padding: 20px;
       border-radius: 10px;
       margin-bottom: 30px;
+      position: relative;
+      z-index: 10;
     }
-    .tooth-animation {
-      font-size: 100px;
-      animation: bounce 2s infinite;
-      margin: 30px 0;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-30px); }
+    .tooth {
+      position: absolute;
+      font-size: 40px;
+      filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.3));
+      user-select: none;
     }
     .service {
       background: white;
@@ -41,6 +43,20 @@
       margin: 10px auto;
       max-width: 500px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+    }
+    #appointmentBtn {
+      padding: 10px 20px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #appointmentBtn:hover {
+      background: #0055aa;
     }
   </style>
 </head>
@@ -49,16 +65,16 @@
     <h1>Стоматологічна клініка "Здорова Посмішка"</h1>
     <p>Професійний догляд за вашими зубами</p>
   </div>
-  
-  <div class="tooth-animation">🦷</div>
-  
+
+  <div id="teeth-container"></div>
+
   <div class="service">
     <h2>Наші послуги</h2>
     <p>• Професійне чищення</p>
     <p>• Лікування карієсу</p>
     <p>• Відбілювання</p>
   </div>
-  
+
   <div class="service">
     <h2>Запис на прийом</h2>
     <button id="appointmentBtn">Записатися онлайн</button>
@@ -74,14 +90,84 @@
       messagingSenderId: "ВАШ_SENDER_ID",
       appId: "ВАШ_APP_ID"
     };
-    
+
     // Ініціалізація Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    
+
     // Обробник кнопки запису
     document.getElementById('appointmentBtn').addEventListener('click', () => {
       alert('Функція запису буде реалізована найближчим часом!');
+    });
+
+    // Анімація зубів
+    const container = document.getElementById('teeth-container');
+    const teethCount = Math.floor(Math.random() * 3) + 6; // 6-8 зубів
+    const teeth = [];
+
+    for (let i = 0; i < teethCount; i++) {
+      const tooth = document.createElement('div');
+      tooth.className = 'tooth';
+      tooth.textContent = '🦷';
+      container.appendChild(tooth);
+      
+      // Випадкові початкові позиції та швидкості
+      const size = Math.random() * 20 + 30;
+      const x = Math.random() * (window.innerWidth - size);
+      const y = Math.random() * (window.innerHeight - size);
+      const speedX = (Math.random() - 0.5) * 5;
+      const speedY = (Math.random() - 0.5) * 5;
+      
+      teeth.push({
+        element: tooth,
+        x,
+        y,
+        speedX,
+        speedY,
+        size
+      });
+      
+      tooth.style.fontSize = `${size}px`;
+    }
+
+    function updateTeeth() {
+      const containerWidth = window.innerWidth;
+      const containerHeight = window.innerHeight;
+      
+      teeth.forEach(tooth => {
+        // Оновлення позиції
+        tooth.x += tooth.speedX;
+        tooth.y += tooth.speedY;
+        
+        // Відбиття від стінок
+        if (tooth.x <= 0 || tooth.x + tooth.size >= containerWidth) {
+          tooth.speedX *= -1;
+        }
+        if (tooth.y <= 0 || tooth.y + tooth.size >= containerHeight) {
+          tooth.speedY *= -1;
+        }
+        
+        // Застосування нових позицій
+        tooth.element.style.left = `${tooth.x}px`;
+        tooth.element.style.top = `${tooth.y}px`;
+      });
+      
+      requestAnimationFrame(updateTeeth);
+    }
+
+    // Запуск анімації
+    updateTeeth();
+
+    // Обробник зміни розміру вікна
+    window.addEventListener('resize', () => {
+      teeth.forEach(tooth => {
+        if (tooth.x + tooth.size > window.innerWidth) {
+          tooth.x = window.innerWidth - tooth.size;
+        }
+        if (tooth.y + tooth.size > window.innerHeight) {
+          tooth.y = window.innerHeight - tooth.size;
+        }
+      });
     });
   </script>
 </body>
