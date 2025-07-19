@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Стоматологія "Перлинна Посмішка" | Професійний догляд за зубами</title>
+  <style>
+    :root {
+      --primary: #00b4d8;
+      --secondary: #90e0ef;
+      --accent: #ff9e00;
+      --light: #caf0f8;
+      --dark: #0077b6;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e1f5fe 100%);
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(90deg, var(--dark) 0%, var(--primary) 100%);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .service-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 8px 30px rgba(0, 180, 216, 0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0, 180, 216, 0.25);
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    
+    .service-card:hover::before {
+      width: 8px;
+    }
+    
+    .service-card h2 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+    
+    .service-list {
+      list-style: none;
+    }
+    
+    .service-list li {
+      padding: 0.5rem 0;
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .service-list li::before {
+      content: '•';
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-size: 1.5rem;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent) 0%, #ffbb00 100%);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 158, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 158, 0, 0.4);
+    }
+    
+    .tooth-3d {
+      position: absolute;
+      font-size: 3rem;
+      pointer-events: none;
+      user-select: none;
+      transform-style: preserve-3d;
+      filter: 
+        drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2))
+        drop-shadow(-1px -1px 3px rgba(255, 255, 255, 0.5));
+      transition: transform 0.5s;
+      z-index: 0;
+    }
+    
+    .floating-bubbles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .bubble {
+      position: absolute;
+      background: rgba(144, 224, 239, 0.3);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .service-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bubbles" id="bubbles-container"></div>
+  
+  <header class="header">
+    <h1>Стоматологічна клініка "Перлинна Посмішка"</h1>
+    <p>Ваші зуби — наша турбота</p>
+    <div id="teeth-container"></div>
+  </header>
+  
+  <div class="container">
+    <div class="service-card">
+      <h2>Наші послуги</h2>
+      <ul class="service-list">
+        <li>Професійне чищення зубів</li>
+        <li>Лікування карієсу та пульпіту</li>
+        <li>Відбілювання Zoom 4</li>
+        <li>Імплантація та протезування</li>
+        <li>Виправлення прикусу</li>
+      </ul>
+    </div>
+    
+    <div class="service-card">
+      <h2>Запис на прийом</h2>
+      <p>Оберіть зручний для вас час та отримайте безкоштовну консультацію</p>
+      <button class="btn" id="appointmentBtn">Записатися онлайн</button>
+    </div>
+  </div>
+
+  <script>
+    // 3D зуби
+    const teethContainer = document.getElementById('teeth-container');
+    const teethCount = 8;
+    const teeth = [];
+    
+    // Створення зубів
+    for (let i = 0; i < teethCount; i++) {
+      const tooth = document.createElement('div');
+      tooth.className = 'tooth-3d';
+      tooth.innerHTML = '🦷';
+      teethContainer.appendChild(tooth);
+      
+      const size = Math.random() * 30 + 40;
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight * 0.6;
+      const speedX = (Math.random() - 0.5) * 2;
+      const speedY = (Math.random() - 0.5) * 2;
+      const rotationSpeed = (Math.random() - 0.5) * 10;
+      
+      tooth.style.fontSize = `${size}px`;
+      tooth.style.left = `${x}px`;
+      tooth.style.top = `${y}px`;
+      
+      teeth.push({
+        element: tooth,
+        x, y, size,
+        speedX, speedY,
+        rotation: 0,
+        rotationSpeed
+      });
+      
+      // Інтерактивність
+      tooth.addEventListener('mouseover', () => {
+        tooth.style.transform = `rotateY(180deg) scale(1.2)`;
+        setTimeout(() => {
+          tooth.style.transform = `rotateY(0deg) scale(1)`;
+        }, 500);
+      });
+    }
+    
+    // Анімація зубів
+    function animateTeeth() {
+      teeth.forEach(tooth => {
+        tooth.x += tooth.speedX;
+        tooth.y += tooth.speedY;
+        tooth.rotation += tooth.rotationSpeed;
+        
+        // Відбиття від країв
+        if (tooth.x <= 0 || tooth.x >= window.innerWidth - tooth.size) {
+          tooth.speedX *= -1;
+        }
+        if (tooth.y <= 0 || tooth.y >= window.innerHeight * 0.6 - tooth.size) {
+          tooth.speedY *= -1;
+        }
+        
+        // Застосування трансформацій
+        tooth.element.style.left = `${tooth.x}px`;
+        tooth.element.style.top = `${tooth.y}px`;
+        tooth.element.style.transform = `rotate(${tooth.rotation}deg)`;
+      });
+      
+      requestAnimationFrame(animateTeeth);
+    }
+    
+    // Пузирці
+    function createBubbles() {
+      const container = document.getElementById('bubbles-container');
+      const bubbleCount = 15;
+      
+      for (let i = 0; i < bubbleCount; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        
+        const size = Math.random() * 100 + 20;
+        const posX = Math.random() * window.innerWidth;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 10;
+        
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${posX}px`;
+        bubble.style.bottom = `-${size}px`;
+        bubble.style.animationDelay = `${delay}s`;
+        bubble.style.animationDuration = `${duration}s`;
+        
+        container.appendChild(bubble);
+      }
+    }
+    
+    // Ініціалізація
+    animateTeeth();
+    createBubbles();
+    
+    // Кнопка запису
+    document.getElementById('appointmentBtn').addEventListener('click', () => {
+      alert('Запис успішно відправлений! Наш менеджер зв\'яжеться з вами протягом 15 хвилин.');
+    });
+  </script>
+</body>
+</html>
