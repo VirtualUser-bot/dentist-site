@@ -3,288 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Стоматологічна клініка Перлинна Посмішка - професійне лікування зубів, імплантація, відбілювання у вашому місті">
+    <meta name="theme-color" content="#00b4d8">
     <title>Стоматологічна клініка "Перлинна Посмішка"</title>
-    <style>
-        /* === БАЗОВІ СТИЛІ === */
-        :root {
-            --primary: #00b4d8;
-            --secondary: #90e0ef;
-            --accent: #ff9e00;
-            --glass: rgba(255, 255, 255, 0.25);
-            --text-dark: #333;
-            --text-light: #fff;
-            --dark-overlay: rgba(0, 0, 0, 0.3);
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK з defer -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js" defer></script>
+    
+    <!-- Мікророзмітка Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": "Перлинна Посмішка",
+        "description": "Стоматологічна клініка",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ваше місто",
+            "streetAddress": "Ваша адреса"
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Montserrat', Arial, sans-serif;
-            color: var(--text-dark);
-            min-height: 100vh;
-            line-height: 1.6;
-            /* Фонова фотографія */
-            background: 
-                linear-gradient(var(--dark-overlay), var(--dark-overlay)),
-                url('https://share.google/EhZs6QhO5pewq7Yw7) no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-
-        /* === ШАПКА === */
-        .header {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            padding: 3rem 1rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* === ОСНОВНИЙ КОНТЕНТ === */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .glass-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .service-list {
-            list-style: none;
-        }
-        
-        .service-list li {
-            padding: 0.8rem 0;
-            font-size: 1.1rem;
-            position: relative;
-            padding-left: 2rem;
-            color: var(--text-light);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        
-        .service-list li::before {
-            content: '•';
-            color: var(--accent);
-            position: absolute;
-            left: 0;
-            font-size: 1.5rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--accent) 0%, #ffbb00 100%);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 1.5rem;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 158, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 158, 0, 0.4);
-            background: linear-gradient(90deg, #ffbb00 0%, var(--accent) 100%);
-        }
-        
-        /* === АНІМАЦІЯ ЗУБІВ === */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        .tooth {
-            position: absolute;
-            font-size: 2.5rem;
-            filter: 
-                drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.3))
-                drop-shadow(-1px -1px 3px rgba(255, 255, 255, 0.5));
-            animation: float 6s ease-in-out infinite;
-            z-index: 0;
-            user-select: none;
-            pointer-events: none;
-            opacity: 0.9;
-        }
-        
-        /* === ТЕКСТ НА ФОНІ === */
-        h1, h2, p {
-            color: var(--text-light);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
-        
-        h2 {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-        
-        /* === АДАПТИВНІСТЬ === */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .glass-card {
-                padding: 1.5rem;
-                margin: 1.5rem 0;
-                backdrop-filter: blur(5px);
-            }
-            
-            .tooth {
-                font-size: 1.8rem;
-            }
-            
-            body {
-                background-attachment: scroll;
-            }
-        }
-    </style>
+    }
+    </script>
 </head>
 <body>
-    <!-- ШАПКА З АНІМОВАНИМИ ЗУБАМИ -->
-    <header class="header" id="header">
-        <h1>Стоматологічна клініка "Перлинна Посмішка"</h1>
-        <p>Ваші зуби — наша турбота</p>
-        
-        <!-- Зуби додаються динамічно через JS -->
-        <div id="teeth-container"></div>
+    <!-- Шапка з ARIA-атрибутами -->
+    <header class="header" role="banner">
+        <h1>Перлинна Посмішка</h1>
+        <p>Професійна стоматологія з турботою про вас</p>
+        <button id="admin-login-btn" class="admin-btn" aria-label="Увійти в адмін-панель">Вхід для адміна</button>
     </header>
-    
-    <!-- ОСНОВНИЙ КОНТЕНТ -->
-    <main class="container">
-        <div class="glass-card">
-            <h2>Наші послуги</h2>
-            <ul class="service-list">
-                <li>Професійне чищення зубів</li>
-                <li>Лікування карієсу та пульпіту</li>
-                <li>Відбілювання Zoom 4</li>
-                <li>Імплантація та протезування</li>
-                <li>Виправлення прикусу</li>
+
+    <!-- Основний контент -->
+    <main class="container" role="main">
+        <!-- Секція послуг -->
+        <section class="services" aria-labelledby="services-heading">
+            <h2 id="services-heading">Наші послуги</h2>
+            <ul class="services-list" id="services-list" role="list">
+                <!-- Послуги додаються через JS -->
             </ul>
-        </div>
-        
-        <div class="glass-card">
-            <h2>Запис на прийом</h2>
-            <p>Оберіть зручний для вас час та отримайте безкоштовну консультацію</p>
-            <button class="btn" id="appointmentBtn">Записатися онлайн</button>
-        </div>
+        </section>
+
+        <!-- Форма запису -->
+        <section class="booking" aria-labelledby="booking-heading">
+            <h2 id="booking-heading" hidden>Запис на прийом</h2>
+            <button id="booking-btn" aria-label="Записатися на прийом">Записатися онлайн</button>
+        </section>
     </main>
 
-    <script>
-        // ===== МОДУЛЬ АНІМАЦІЇ ЗУБІВ =====
-        class TeethAnimation {
-            constructor(containerId) {
-                this.container = document.getElementById(containerId);
-                this.teeth = [];
-                this.init();
-            }
-            
-            init() {
-                // Створюємо 6 зубів з різними параметрами
-                for (let i = 0; i < 6; i++) {
-                    this.createTooth();
-                }
-                this.animate();
-            }
-            
-            createTooth() {
-                const tooth = document.createElement('div');
-                tooth.className = 'tooth';
-                tooth.innerHTML = '🦷';
-                
-                // Випадкові параметри
-                const size = Math.floor(Math.random() * 30) + 40;
-                const startX = Math.random() * 80 + 10; // 10-90%
-                const startY = Math.random() * 60 + 10; // 10-70%
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 3 + 4; // 4-7 секунд
-                
-                tooth.style.cssText = `
-                    font-size: ${size}px;
-                    left: ${startX}%;
-                    top: ${startY}%;
-                    animation-delay: ${delay}s;
-                    animation-duration: ${duration}s;
-                `;
-                
-                this.container.appendChild(tooth);
-                this.teeth.push({
-                    element: tooth,
-                    x: startX,
-                    y: startY,
-                    speedX: (Math.random() - 0.5) * 0.3,
-                    speedY: (Math.random() - 0.5) * 0.3
-                });
-            }
-            
-            animate() {
-                this.teeth.forEach(tooth => {
-                    // Оновлюємо позицію
-                    tooth.x += tooth.speedX;
-                    tooth.y += tooth.speedY;
-                    
-                    // Відбиття від країв
-                    if (tooth.x <= 0 || tooth.x >= 100) tooth.speedX *= -1;
-                    if (tooth.y <= 0 || tooth.y >= 100) tooth.speedY *= -1;
-                    
-                    // Застосовуємо зміни
-                    tooth.element.style.left = `${tooth.x}%`;
-                    tooth.element.style.top = `${tooth.y}%`;
-                });
-                
-                requestAnimationFrame(() => this.animate());
-            }
-        }
-        
-        // ===== ОСНОВНИЙ КОД =====
-        document.addEventListener('DOMContentLoaded', () => {
-            // Ініціалізуємо анімацію зубів
-            new TeethAnimation('teeth-container');
-            
-            // Обробник кнопки запису
-            document.getElementById('appointmentBtn').addEventListener('click', () => {
-                alert('Форма запису відкриється у новому вікні. Дякуємо за ваше звернення!');
-            });
-        });
-    </script>
+    <!-- Адмін-панель (прихована за замовчуванням) -->
+    <div id="admin-panel" class="admin-panel" role="region" aria-labelledby="admin-panel-heading" hidden>
+        <h2 id="admin-panel-heading">Панель управління послугами</h2>
+        <div class="admin-form" role="form">
+            <input type="text" id="service-name" placeholder="Назва послуги" aria-label="Назва послуги">
+            <input type="number" id="service-price" placeholder="Ціна (грн)" aria-label="Ціна послуги в гривнях">
+            <button id="add-service-btn" aria-label="Додати нову послугу">Додати послугу</button>
+        </div>
+        <div id="admin-services-list" class="admin-list" role="list">
+            <!-- Список послуг для редагування -->
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer" role="contentinfo">
+        <p>© 2024 Перлинна Посмішка</p>
+    </footer>
+
+    <!-- Підключення JS-модулів з defer -->
+    <script src="firebase-init.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="services.js" defer></script>
+    <script src="admin.js" defer></script>
+    <script src="teeth.js" defer></script>
 </body>
 </html>

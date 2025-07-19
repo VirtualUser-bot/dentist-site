@@ -1,0 +1,132 @@
+/* Основні стилі */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+.header {
+    background: linear-gradient(90deg, #00b4d8, #90e0ef);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Анімовані зуби */
+.tooth {
+    position: absolute;
+    font-size: 2.5rem;
+    user-select: none;
+    pointer-events: none;
+    z-index: 10;
+    animation: float 15s infinite linear;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20px, -15px) rotate(5deg); }
+    50% { transform: translate(0, -20px) rotate(0deg); }
+    75% { transform: translate(-20px, -15px) rotate(-5deg); }
+}
+
+/* Стилі для послуг */
+.services-list {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    z-index: 5;
+}
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 10px 0;
+    background: rgba(255,255,255,0.9);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.service-item:hover {
+    background: #e3f2fd;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.service-item:active {
+    transform: scale(0.98);
+}
+
+.service-price {
+    color: #00b4d8;
+    font-weight: bold;
+}
+
+/* Адмін-панель */
+.admin-panel {
+    display: none;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f5f5f5;
+    border-radius: 10px;
+    position: relative;
+    z-index: 5;
+}
+
+/* Кнопки */
+.admin-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 15px;
+    background: #ff9e00;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+}
+
+.admin-btn:hover {
+    background: #ff8c00;
+    transform: translateY(-2px);
+}
+
+#booking-btn {
+    padding: 12px 24px;
+    background: #00b4d8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#booking-btn:hover {
+    background: #0095c7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,180,216,0.3);
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .tooth {
+        font-size: 2rem;
+    }
+    
+    .service-item {
+        padding: 12px;
+    }
+}
