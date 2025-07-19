@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Стоматологічна клініка 🦷</title>
+  
+  <!-- Підключаємо Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .header {
+      background: #0066cc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .tooth-animation {
+      font-size: 100px;
+      animation: bounce 2s infinite;
+      margin: 30px 0;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+    .service {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px auto;
+      max-width: 500px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Стоматологічна клініка "Здорова Посмішка"</h1>
+    <p>Професійний догляд за вашими зубами</p>
+  </div>
+  
+  <div class="tooth-animation">🦷</div>
+  
+  <div class="service">
+    <h2>Наші послуги</h2>
+    <p>• Професійне чищення</p>
+    <p>• Лікування карієсу</p>
+    <p>• Відбілювання</p>
+  </div>
+  
+  <div class="service">
+    <h2>Запис на прийом</h2>
+    <button id="appointmentBtn">Записатися онлайн</button>
+  </div>
+
+  <script>
+    // Конфігурація Firebase (замініть на свою!)
+    const firebaseConfig = {
+      apiKey: "ВАШ_API_KEY",
+      authDomain: "ВАШ_PROJECT_ID.firebaseapp.com",
+      projectId: "ВАШ_PROJECT_ID",
+      storageBucket: "ВАШ_PROJECT_ID.appspot.com",
+      messagingSenderId: "ВАШ_SENDER_ID",
+      appId: "ВАШ_APP_ID"
+    };
+    
+    // Ініціалізація Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    
+    // Обробник кнопки запису
+    document.getElementById('appointmentBtn').addEventListener('click', () => {
+      alert('Функція запису буде реалізована найближчим часом!');
+    });
+  </script>
+</body>
+</html>
