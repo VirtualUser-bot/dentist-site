@@ -60,7 +60,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 15px;
-  margin: 10px 0;
+  margin: 15px 0;
   background: rgba(255,255,255,0.9);
   border-radius: 8px;
   transition: all 0.3s ease;
@@ -84,6 +84,61 @@ body {
   font-weight: bold;
 }
 
+/* Стилі для вкладок */
+.services-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    background: #f0f9ff;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: #00b4d8;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    background: white;
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.price {
+    font-size: 24px;
+    color: #00b4d8;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.service-details h4 {
+    color: #333;
+    margin-top: 20px;
+}
+
+.book-btn {
+    padding: 12px 24px;
+    background: #00b4d8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+}
 /* Адмін-панель */
 .admin-panel {
   display: none;
@@ -134,10 +189,12 @@ body {
 }
 
 /* Адаптивність */
-@media (max-width: 768px) {
-  .tooth {
-    font-size: 2rem;
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
   }
+}
   
   .service-item {
     padding: 12px;
