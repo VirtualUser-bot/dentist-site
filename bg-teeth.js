@@ -1,57 +1,65 @@
 /**
- * 3D-рендеринг зубів для фону сайту
- * Автоматично адаптується до розміру екрану
+ * Реалістичний рендеринг зубів для фону
  */
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('teeth-bg');
   const ctx = canvas.getContext('2d');
-  let teethCount = calculateTeethCount();
+  
+  // Кольори для зубів
+  const toothColors = ['#f8f4ff', '#fffaf0', '#f5fffa'];
+  const shadowColor = 'rgba(0, 0, 0, 0.1)';
 
-  // Ініціалізація canvas
   function initCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    teethCount = calculateTeethCount();
     drawTeeth();
   }
 
-  // Малювання зубів
   function drawTeeth() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Кількість зубів залежить від розміру екрану
+    const teethCount = Math.floor((canvas.width * canvas.height) / 50000);
     
     for (let i = 0; i < teethCount; i++) {
       drawTooth(
         Math.random() * canvas.width,
         Math.random() * canvas.height,
-        30 + Math.random() * 50
+        20 + Math.random() * 40
       );
     }
   }
 
-  // Малювання одного зуба
   function drawTooth(x, y, size) {
+    // Форма зуба (більш реалістична)
     ctx.beginPath();
     ctx.moveTo(x, y);
-    ctx.lineTo(x + size/2, y - size);
-    ctx.lineTo(x + size, y);
+    ctx.bezierCurveTo(
+      x + size/3, y - size/2,
+      x + size*2/3, y - size/2,
+      x + size, y
+    );
+    ctx.bezierCurveTo(
+      x + size*2/3, y + size/4,
+      x + size/3, y + size/4,
+      x, y
+    );
     ctx.closePath();
-    ctx.fillStyle = '#00b4d8';
+    
+    // Градієнт для об'ємного ефекту
+    const gradient = ctx.createLinearGradient(x, y - size/2, x, y + size/4);
+    gradient.addColorStop(0, toothColors[Math.floor(Math.random() * toothColors.length)]);
+    gradient.addColorStop(1, '#e6e6fa');
+    
+    ctx.fillStyle = gradient;
     ctx.fill();
+    
+    // Тінь для реалізму
+    ctx.strokeStyle = shadowColor;
+    ctx.lineWidth = 1;
+    ctx.stroke();
   }
 
-  // Розрахунок кількості зубів залежно від розміру екрану
-  function calculateTeethCount() {
-    const baseCount = 15;
-    const screenArea = window.innerWidth * window.innerHeight;
-    const referenceArea = 1920 * 1080;
-    return Math.floor(baseCount * (screenArea / referenceArea));
-  }
-
-  // Обробники подій
-  window.addEventListener('resize', () => {
-    initCanvas();
-  });
-
-  // Початкова ініціалізація
+  window.addEventListener('resize', initCanvas);
   initCanvas();
 });
