@@ -9,7 +9,7 @@
     <title>Стоматологічна клініка "Перлинна Посмішка"</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Firebase SDK з defer -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js" defer></script>
@@ -40,21 +40,37 @@
 
     <!-- Основний контент -->
     <main class="container" role="main">
-        <!-- Секція послуг -->
-        <section class="services" aria-labelledby="services-heading">
-            <h2 id="services-heading">Наші послуги</h2>
-            <ul class="services-list" id="services-list" role="list">
-                <!-- Послуги додаються через JS -->
-            </ul>
-        </section>
+  <!-- Секція послуг -->
+  <section class="services" aria-labelledby="services-heading">
+    <h2 id="services-heading">Наші послуги</h2>
+    <ul class="services-list" id="services-list" role="list">
+      <!-- Послуги додаються через JS -->
+    </ul>
+  </section>
 
-        <!-- Форма запису -->
-        <section class="booking" aria-labelledby="booking-heading">
-            <h2 id="booking-heading" hidden>Запис на прийом</h2>
-            <button id="booking-btn" aria-label="Записатися на прийом">Записатися онлайн</button>
-        </section>
-    </main>
+  <!-- Секція "Про нас" -->
+  <section id="about" class="about" aria-labelledby="about-heading">
+    <h2 id="about-heading">Чому обирають нас?</h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <img src="assets/icons/tooth-icon.svg" alt="" width="50">
+        <h3>Сучасне обладнання</h3>
+        <p>Використовуємо тільки новітні технології</p>
+      </div>
+      <div class="about-card">
+        <img src="assets/icons/medal-icon.svg" alt="" width="50">
+        <h3>Лікарі зі стажем</h3>
+        <p>Понад 15 років досвіду</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- Галерея (додайте реальні фото) -->
+  <section class="gallery" aria-label="Галерея клініки">
+    <img src="assets/images/clinic-1.jpg" alt="Інтер'єр клініки" loading="lazy">
+    <img src="assets/images/clinic-2.jpg" alt="Лікар за роботою" loading="lazy">
+  </section>
+</main>
     <!-- Адмін-панель (прихована за замовчуванням) -->
     <div id="admin-panel" class="admin-panel" role="region" aria-labelledby="admin-panel-heading" hidden>
         <h2 id="admin-panel-heading">Панель управління послугами</h2>
@@ -70,7 +86,7 @@
 
     <!-- Футер -->
     <footer class="footer" role="contentinfo">
-        <p>© 2024 Перлинна Посмішка</p>
+        <p>© 2025 Перлинна Посмішка</p>
     </footer>
 
     <!-- Canvas для фону -->
